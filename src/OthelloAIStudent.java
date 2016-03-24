@@ -1,27 +1,19 @@
 import java.util.ArrayList;
+/* AlphaBeta http://en.wikipedia.org/wiki/Alpha-beta_pruning and Heuristic search
+ Alpha beta prunning depth of seven
+ minMax algorithm has a search depth of 5
+*/
 
-/* Dinorah Carrion Rodriguez, dcarrion@uci.edu
- * 35657319
- * */
-//The strategy I used follows AlphaBeta http://en.wikipedia.org/wiki/Alpha-beta_pruning and Heuristic search 
-
-public class OthelloAI35657319 implements OthelloAI 
+public class OthelloAIStudent implements OthelloAI 
 {
 	private boolean isBlack;
 	
 	@Override
 	public OthelloMove chooseMove(OthelloGameState state) 
 	{
-		/*depth 7 for alpha beta prunning. The evaluation function is
-		 * "GreedyWinCornersMobility" 
-		 * the minMax algorithm has a search depth of 5, and the evaluation function is greedy 
-		 * which is represented/executed by :
-		 * return minMaxSearch(state, eval.Greedy, 5).move;
-		*/
 	  
 	  isBlack = state.isBlackTurn(); //color
-	  return alphaBeta(state, null, null, 
-				System.currentTimeMillis(), eval.GreedyWinCornersMobility, 6).move;
+	  return alphaBeta(state, null, null, System.currentTimeMillis(), eval.GreedyWinCornersMobility, 6).move;
 		
 		
 	}
@@ -46,8 +38,8 @@ public class OthelloAI35657319 implements OthelloAI
 		}
 	}
 
-	/*naive minMax search 
-	 * finds max score, if not then it finds the min score during my turn
+	/* naive minMax search 
+	 *Attempts to find the max score, if it can't it will find during its turn
 	 * */
 	tallyScore minMaxSearch(OthelloGameState gameState, eval e, int depth)
 	{
@@ -87,18 +79,18 @@ public class OthelloAI35657319 implements OthelloAI
 		//Maximize
     	if(isBlack == s.isBlackTurn())
     	{
-    		//Go through child trees
+    		//Traverse children
     		boolean shouldBreak = false;
     		for(OthelloMove validMove : validMoves(s))
             {
     			if(!shouldBreak)
     			{
-    				//clone the state and make move
+    				//clone the state and make a move
 	    			OthelloGameState s2 = s.clone();
 	    			s2.makeMove(validMove.getRow(), validMove.getColumn());
 	    			int current = alphaBeta(s2, alpha, beta, start, e, depth-1).score;
 	    			
-	    			//maximum score
+	    			//max score
 	    			if(alpha == null || current > alpha)
 	    			{
 	    				best = validMove;
